@@ -28,9 +28,28 @@ require('arrow').setup({
     leader_key = ';'
 })
 
+if os.date("*t").hour >= 18 then
+    vim.cmd("colorscheme kanagawa-wave")
+    DARK_THEME = true
+else
+    vim.cmd("colorscheme kanagawa-lotus")
+    DARK_THEME = false
+end
+
+function switch_theme()
+    if(DARK_THEME) then
+        vim.cmd("colorscheme kanagawa-lotus")
+        DARK_THEME = false
+    else
+        vim.cmd("colorscheme kanagawa-wave")
+        DARK_THEME = true
+    end
+end
+
 vim.keymap.set('n', '<leader>f', MiniFiles.open)
 vim.keymap.set('n', '<leader>q', ":quit<CR>")
 vim.keymap.set('n', '<leader>w', ":write<CR>")
+vim.keymap.set('n', '<leader>t', switch_theme)
 
 require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the listed parsers MUST always be installed)
@@ -74,7 +93,9 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
-vim.cmd("colorscheme kanagawa-wave")
+
+
+
 
 vim.lsp.enable({
     'lua_ls',
@@ -93,6 +114,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.diagnostic.config({ virtual_text = true })
     end
 })
+
+
 
 
 
