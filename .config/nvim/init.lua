@@ -9,6 +9,8 @@ vim.o.smartindent = true
 vim.o.termguicolors = true
 vim.o.expandtab = true
 vim.o.shiftwidth = 4
+vim.opt.titlestring = [[%f %h%m%r%w %{v:progname} (%{tabpagenr()} of %{tabpagenr('$')})]]
+
 
 vim.g.mapleader = " "
 
@@ -28,7 +30,28 @@ require('arrow').setup({
     leader_key = ';'
 })
 
-if os.date("*t").hour >= 18 then
+local lspconfig = require("lspconfig")
+
+lspconfig.lua_ls.setup {
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {
+          'vim',
+          'require'
+        },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+    },
+  },
+}
+
+local hour = os.date("*t").hour
+if hour >= 18 or hour <= 8 then
     vim.cmd("colorscheme kanagawa-wave")
     DARK_THEME = true
 else
@@ -36,7 +59,7 @@ else
     DARK_THEME = false
 end
 
-function switch_theme()
+local function switch_theme()
     if(DARK_THEME) then
         vim.cmd("colorscheme kanagawa-lotus")
         DARK_THEME = false
@@ -106,6 +129,7 @@ vim.lsp.enable({
     'templ',
     'zls'
 })
+
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(ev)
         vim.cmd('source ~/.config/nvim/autocomplete.vim')
