@@ -1,7 +1,8 @@
 function! OpenCompletion()
-    if !pumvisible() && ((v:char >= 'a' && v:char <= 'z') || (v:char >= 'A' && v:char <= 'Z'))
+    if !pumvisible() && (luaeval('vim.bo.omnifunc') == 'v:lua.vim.lsp.omnifunc')
         call feedkeys("\<C-x>\<C-o>", "n")
     endif
 endfunction
 
 autocmd InsertCharPre * call OpenCompletion()
+

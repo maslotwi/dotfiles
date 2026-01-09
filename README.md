@@ -2,7 +2,7 @@
 configs etc
 
 # Installation
-`bash install.sh`
+`stow .`
 
 # Acknowledgements
 ## .bashrc
@@ -10,3 +10,7 @@ configs etc
 
 ## .tmux.conf
 - https://hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/
+
+## .stow-local-ignore
+- https://www.gnu.org/software/stow/manual/html_node/Types-And-Syntax-Of-Ignore-Lists.html
+
