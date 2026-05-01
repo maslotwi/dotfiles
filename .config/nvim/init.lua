@@ -14,13 +14,47 @@ vim.opt.titlestring = [[%f %h%m%r%w %{v:progname} (%{tabpagenr()} of %{tabpagenr
 
 vim.g.mapleader = " "
 
+local config_path = vim.fn.stdpath("config") .. "/local_settings.json"
+
+local function load_local_settings(filepath)
+    local file = io.open(filepath, "r")
+    
+    if not file then
+        return {} 
+    end
+
+    local content = file:read("*a")
+    file:close()
+
+    if content == "" then 
+        return {} 
+    end
+
+    local ok, parsed_json = pcall(vim.json.decode, content)
+    
+    if not ok then
+        vim.notify("Failed to parse local_settings.json!", vim.log.levels.ERROR)
+        return {}
+    end
+
+    return parsed_json
+end
+
+-- Zapisanie ustawień do zmiennej
+local local_settings = load_local_settings(config_path)
+
+
 vim.pack.add{
     { src = 'https://github.com/neovim/nvim-lspconfig' },
     { src = 'https://github.com/rebelot/kanagawa.nvim' },
     { src = 'https://github.com/echasnovski/mini.icons' },
     { src = 'https://github.com/echasnovski/mini.files' },
     { src = 'https://github.com/otavioschwanck/arrow.nvim' },
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter' }
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+--    { src = 'https://github.com/nvim-lua/plenary.nvim' },
+--    { src = 'https://github.com/hrsh7th/nvim-cmp' },
+--    { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
+--    { src = 'https://github.com/magicmonty/sonicpi.nvim' },
 }
 
 require('mini.icons').setup()
@@ -29,6 +63,17 @@ require('arrow').setup({
     show_icons = true,
     leader_key = ';'
 })
+
+--require('sonicpi').setup({
+--    server_dir = local_settings.sonicpi_server, -- It will try to find the SonicPi server
+--    lsp_diagnostics = false, -- enable LSP diagnostics
+--    mappings = {
+--        { 'n', '<leader>s', require('sonicpi.remote').stop, default_mapping_opts },
+--        { 'i', '<M-s>', require('sonicpi.remote').stop, default_mapping_opts },
+--        { 'n', '<leader>r', require('sonicpi.remote').run_current_buffer, default_mapping_opts },
+--        { 'i', '<M-r>', require('sonicpi.remote').run_current_buffer, default_mapping_opts },
+--    },
+--})
 
 local lspconfig = require("lspconfig")
 
@@ -49,6 +94,8 @@ lspconfig.lua_ls.setup {
     },
   },
 }
+
+
 
 local hour = os.date("*t").hour
 if hour >= 18 or hour <= 8 then
@@ -73,6 +120,26 @@ vim.keymap.set('n', '<leader>f', MiniFiles.open)
 vim.keymap.set('n', '<leader>q', ":quit<CR>")
 vim.keymap.set('n', '<leader>w', ":write<CR>")
 vim.keymap.set('n', '<leader>t', switch_theme)
+
+-- Insert mode: Save (Ctrl+S)
+-- Using <C-o> allows us to execute a single normal mode command (:write) without leaving insert mode.
+vim.keymap.set('i', '<C-s>', '<C-o>:write<CR>', { silent = true, desc = "Save file" })
+
+-- Insert mode: Select whole file (Ctrl+A)
+-- This escapes to normal mode (<Esc>), goes to the top (gg), enters visual line mode (V), and goes to the bottom (G).
+vim.keymap.set('i', '<C-a>', '<Esc>ggVG', { silent = true, desc = "Select whole file" })
+
+-- Insert mode: Comment/Uncomment line (Ctrl+/)
+-- This uses <C-o> to briefly enter normal mode and trigger Neovim's native 'gcc' comment toggle.
+vim.keymap.set('i', '<C-/>', '<C-o>gcc', { remap = true, silent = true, desc = "Toggle comment" })
+vim.keymap.set('i', '<C-_>', '<C-o>gcc', { remap = true, silent = true, desc = "Toggle comment (terminal fallback)" })
+
+-- Visual mode: Comment/Uncomment selection (Ctrl+/)
+-- This triggers Neovim's native 'gc' comment operator on the current visual selection.
+vim.keymap.set('v', '<C-/>', 'gc', { remap = true, silent = true, desc = "Toggle comment selection" })
+vim.keymap.set('v', '<C-_>', 'gc', { remap = true, silent = true, desc = "Toggle comment selection (terminal fallback)" })
+
+
 
 require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the listed parsers MUST always be installed)
@@ -116,7 +183,24 @@ require'nvim-treesitter.configs'.setup {
     },
 }
 
+-- https://www.dogeystamp.com/typst-notes2/
+local function typst_watch()
+    vim.cmd('vsp')
+    vim.cmd('vertical resize 20')
 
+    local current_file = vim.fn.expand("%")
+
+    vim.cmd('terminal typst watch ' .. current_file)
+
+    vim.cmd('wincmd h')
+end
+
+vim.keymap.set('n', '<leader>tw', typst_watch, { silent = true, desc = "Typst watch in terminal split" })
+
+vim.keymap.set('n', '<leader>tp', function()
+    local pdf_file = vim.fn.expand("%:p:r") .. ".pdf"
+    vim.cmd('silent !zathura --fork ' .. vim.fn.shellescape(pdf_file) .. ' &')
+end, { silent = true, desc = "Open Typst PDF in Zathura" })
 
 
 
@@ -127,7 +211,9 @@ vim.lsp.enable({
     'clangd',
     'ts_ls',
     'templ',
-    'zls'
+    'zls',
+    'glsl_analyzer',
+    'tinymist'
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
