@@ -75,29 +75,24 @@ require('arrow').setup({
 --    },
 --})
 
-local lspconfig = require("lspconfig")
-
-lspconfig.lua_ls.setup {
+vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
       diagnostics = {
-        -- Get the language server to recognize the `vim` global
         globals = {
           'vim',
           'require'
         },
       },
       workspace = {
-        -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
       },
     },
   },
-}
-
-
+})
 
 local hour = os.date("*t").hour
+
 if hour >= 18 or hour <= 8 then
     vim.cmd("colorscheme kanagawa-wave")
     DARK_THEME = true
@@ -119,7 +114,7 @@ end
 vim.keymap.set('n', '<leader>f', MiniFiles.open)
 vim.keymap.set('n', '<leader>q', ":quit<CR>")
 vim.keymap.set('n', '<leader>w', ":write<CR>")
-vim.keymap.set('n', '<leader>t', switch_theme)
+vim.keymap.set('n', '<leader>tt', switch_theme)
 
 -- Insert mode: Save (Ctrl+S)
 -- Using <C-o> allows us to execute a single normal mode command (:write) without leaving insert mode.
@@ -142,6 +137,7 @@ vim.keymap.set('v', '<C-_>', 'gc', { remap = true, silent = true, desc = "Toggle
 
 
 require'nvim-treesitter.configs'.setup {
+    modules = {},
     -- A list of parser names, or "all" (the listed parsers MUST always be installed)
     ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "go", "templ", "zig" },
 
