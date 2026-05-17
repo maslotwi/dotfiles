@@ -117,4 +117,5 @@ fi
 if [[ -f ~/.local/bin/aur-pager ]]; then
     export AUR_PAGER="$HOME/.local/bin/aur-pager"
 fi
+eval "$(zoxide init bash)"
 

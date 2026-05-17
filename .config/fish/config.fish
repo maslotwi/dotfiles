@@ -34,3 +34,4 @@ if not set -q SSH_AUTH_SOCK; or not test -S $SSH_AUTH_SOCK
     eval (ssh-agent -c) > /dev/null
 end
 
+zoxide init fish | source

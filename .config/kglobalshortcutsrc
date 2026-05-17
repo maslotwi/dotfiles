@@ -1,5 +1,6 @@
 [ActivityManager]
 _k_friendly_name=Zarządzanie aktywnościami
+switch-to-activity-2032d44e-ba51-487b-968c-a8ef563ecd62=none,none,Przełącz do aktywności „Domyślna”
 switch-to-activity-46700a66-37db-468e-aa60-772a32cdd928=none,none,Przełącz do aktywności „Domyślna”
 
 [KDE Keyboard Layout Switcher]
@@ -296,6 +297,7 @@ activate task manager entry 8=Meta+8,Meta+8,Uaktywnij wpis 8 na pasku zadań
 activate task manager entry 9=Meta+9,Meta+9,Uaktywnij wpis 9 na pasku zadań
 activate widget 22=Alt+F1,none,Activate Menu rozsuwane programów Widget
 activate widget 24=none,none,Włącz element interfejsu: Paskowy przełącznik zadań
+activate widget 25=,none,Włącz element interfejsu: Menu rozsuwane programów
 activate widget 81=,none,Activate Ikonowo-tekstowy przełącznik zadań Widget
 activate widget 86=,none,Włącz element interfejsu: Menu rozsuwane programów
 clear-history=none,,Wyczyść historię schowka
@@ -343,3 +345,7 @@ Toggle screen map selection=Meta+Ctrl+M,Meta+Ctrl+M,Przełącz pomiędzy wszystk
 Toggle stylus mode=Meta+Ctrl+S,Meta+Ctrl+S,Przełącz narzędzie rysika na relatywne/bezwzględne
 Toggle touch tool=Meta+Ctrl+T,Meta+Ctrl+T,Włącz/Wyłącz narzędzie dotyku
 _k_friendly_name=Tablet Wacom
+
+[yakuake]
+_k_friendly_name=Yakuake
+toggle-window-state=F12,F12,Otwórz/ukryj Yakuake
