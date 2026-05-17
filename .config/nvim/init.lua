@@ -51,6 +51,7 @@ vim.pack.add{
     { src = 'https://github.com/echasnovski/mini.files' },
     { src = 'https://github.com/otavioschwanck/arrow.nvim' },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+    { src = 'https://github.com/github/copilot.vim' },
 --    { src = 'https://github.com/nvim-lua/plenary.nvim' },
 --    { src = 'https://github.com/hrsh7th/nvim-cmp' },
 --    { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
@@ -222,7 +223,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 
+-- 1. Disable Copilot's default Tab mapping so it doesn't conflict
+vim.g.copilot_no_tab_map = true
 
+-- 2. Map <Tab> to intelligently handle Copilot vs. Autocomplete Menu
+-- Priority: Copilot Ghost Text -> Autocomplete Menu (Next) -> Standard Tab
+vim.cmd([[
+  imap <silent><script><expr> <Tab> copilot#Accept(pumvisible() ? "\<C-n>" : "\<Tab>")
+]])
+
+-- 3. Optional: Map Shift+Tab to cycle backward through your autocomplete menu
+vim.cmd([[
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+]])
 
 
 --vim.api.nvim_create_autocmd('LspAttach', {

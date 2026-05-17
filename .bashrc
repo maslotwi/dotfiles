@@ -113,3 +113,8 @@ fi
 if [[ -f ~/local.bashrc ]]; then
     . ~/local.bashrc
 fi
+
+if [[ -f ~/.local/bin/aur-pager ]]; then
+    export AUR_PAGER="$HOME/.local/bin/aur-pager"
+fi
+
