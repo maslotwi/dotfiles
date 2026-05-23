@@ -40,6 +40,7 @@ alias la='ls -A'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='grep -E --color=auto'
+alias open='xdg-open'
 
 [[ "$(whoami)" = "root" ]] && return
 
@@ -117,5 +118,9 @@ fi
 if [[ -f ~/.local/bin/aur-pager ]]; then
     export AUR_PAGER="$HOME/.local/bin/aur-pager"
 fi
-eval "$(zoxide init bash)"
-
+eval "$(zoxide init bash --cmd cd)"
+eval "$(fzf --bash)"
+eval "$(mcfly init bash)"
+bind -m emacs-standard -x '"\er": __fzf_history__'
+bind -m vi-command -x '"\er": __fzf_history__'
+bind -m vi-insert -x '"\er": __fzf_history__'

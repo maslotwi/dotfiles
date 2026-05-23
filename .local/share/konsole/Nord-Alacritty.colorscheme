@@ -1,4 +1,3 @@
-# Based on CachyOS alacritty colors
 [Background]
 Color=46,52,64
 
@@ -95,7 +94,7 @@ Blur=true
 ColorRandomization=false
 Description=Nord Alacritty
 FillStyle=Tile
-Opacity=0.6
+Opacity=0.7
 Wallpaper=
 WallpaperFlipType=NoFlip
 WallpaperOpacity=1

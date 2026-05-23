@@ -9,7 +9,7 @@ function fish_prompt
     echo -n (whoami)
     set_color normal
     echo -n '@'
-    hostname
+    cat /etc/hostname
     set_color red
     prompt_pwd
     set_color normal
@@ -34,4 +34,12 @@ if not set -q SSH_AUTH_SOCK; or not test -S $SSH_AUTH_SOCK
     eval (ssh-agent -c) > /dev/null
 end
 
-zoxide init fish | source
+zoxide init fish --cmd cd | source
+fzf --fish | source
+mcfly init fish | source
+
+function fish_user_key_bindings
+    mcfly_key_bindings
+
+    bind \er fzf-history-widget
+end
