@@ -29,11 +29,12 @@ if type -q pyenv
     pyenv init - fish | source
 end
 set -gx AUR_PAGER aur-pager 
-# Auto-launch ssh-agent
-if not set -q SSH_AUTH_SOCK; or not test -S $SSH_AUTH_SOCK
-    eval (ssh-agent -c) > /dev/null
-end
+set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.sock"
 
+if not pgrep -u "$USER" ssh-agent > /dev/null
+    rm -f "$SSH_AUTH_SOCK"
+    ssh-agent -a "$SSH_AUTH_SOCK" -t 1h > /dev/null
+end
 zoxide init fish --cmd cd | source
 fzf --fish | source
 mcfly init fish | source
