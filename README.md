@@ -5,12 +5,12 @@ configs etc
 `stow .`
 
 # Acknowledgements
-## .bashrc
+### .bashrc
 - EndeavourOS' default .bashrc
 
-## .tmux.conf
+### .tmux.conf
 - https://hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/
 
-## .stow-local-ignore
+### .stow-local-ignore
 - https://www.gnu.org/software/stow/manual/html_node/Types-And-Syntax-Of-Ignore-Lists.html
 

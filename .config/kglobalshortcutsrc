@@ -298,6 +298,7 @@ activate task manager entry 9=Meta+9,Meta+9,Uaktywnij wpis 9 na pasku zadań
 activate widget 22=Alt+F1,none,Activate Menu rozsuwane programów Widget
 activate widget 24=none,none,Włącz element interfejsu: Paskowy przełącznik zadań
 activate widget 25=,none,Włącz element interfejsu: Menu rozsuwane programów
+activate widget 72=,none,Włącz element interfejsu: Zegar cyfrowy
 activate widget 81=,none,Activate Ikonowo-tekstowy przełącznik zadań Widget
 activate widget 86=,none,Włącz element interfejsu: Menu rozsuwane programów
 clear-history=none,,Wyczyść historię schowka
