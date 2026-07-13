@@ -124,3 +124,8 @@ eval "$(mcfly init bash)"
 bind -m emacs-standard -x '"\er": __fzf_history__'
 bind -m vi-command -x '"\er": __fzf_history__'
 bind -m vi-insert -x '"\er": __fzf_history__'
+
+# ZVM
+export ZVM_INSTALL="$HOME/.zvm/self"
+export PATH="$PATH:$HOME/.zvm/bin"
+export PATH="$PATH:$ZVM_INSTALL/"

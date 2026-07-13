@@ -1,2 +1,3 @@
 .config/nvim/local_settings.json
 .config/nvim/nvim-pack-lock.json
+.config/fish/fish_variables

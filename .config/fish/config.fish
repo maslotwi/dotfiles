@@ -44,3 +44,10 @@ function fish_user_key_bindings
 
     bind \er fzf-history-widget
 end
+
+set -gx ZVM_INSTALL "$HOME/.zvm/self"
+fish_add_path "$HOME/.zvm/bin"
+fish_add_path "$ZVM_INSTALL"
+
+set -gx CC "/usr/bin/clang"
+set -gx CXX "/usr/bin/clang++"
