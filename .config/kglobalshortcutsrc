@@ -286,7 +286,7 @@ powerProfile=Battery,Battery\tMeta+B,Przełącz profil zasilania
 [plasmashell]
 Slideshow Wallpaper Next Image=none,none,Następny obraz tapety
 _k_friendly_name=plasmashell
-activate application launcher=none,Meta\tAlt+F1,Przejdź do uruchamiacza programów
+activate application launcher=none,Meta\tAlt+F1,Przejdź do menu aplikacji
 activate task manager entry 1=Meta+1,Meta+1,Uaktywnij wpis 1 na pasku zadań
 activate task manager entry 10=none,none,Uaktywnij wpis 10 na pasku zadań
 activate task manager entry 2=Meta+2,Meta+2,Uaktywnij wpis 2 na pasku zadań
